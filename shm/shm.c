@@ -1,6 +1,6 @@
 #include "shm.h"
 
-int sysv_shm_open(int size, int flags, int perm) {
+int sysv_shm_open(unsigned long size, int flags, int perm) {
     int shm_id;
 
     if(size) {
