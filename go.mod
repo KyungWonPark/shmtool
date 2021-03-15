@@ -1,9 +1,9 @@
-module github.com/ghetzel/shmtool
+module github.com/KyungWonPark/shmtool
 
-go 1.12
+go 1.16
 
 require (
-	github.com/ghetzel/cli v0.0.0-20160426024742-4733699ce30f
-	github.com/ghetzel/go-stockutil v1.8.3
-	golang.org/x/sys v0.0.0-20190422165155-953cdadca894
+	github.com/ghetzel/cli v1.17.0
+	github.com/ghetzel/go-stockutil v1.9.10
+	github.com/ghetzel/shmtool v0.0.4
 )
