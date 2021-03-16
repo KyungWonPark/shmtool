@@ -45,7 +45,7 @@ type Segment struct {
 // Create a new shared memory segment with the given size (in bytes).  The system will automatically
 // round the size up to the nearest memory page boundary (typically 4KB).
 //
-func Create(size uint64) (*Segment, error) {
+func Create(size uint32) (*Segment, error) {
 	return OpenSegment(size, (IpcCreate | IpcExclusive), 0600)
 }
 
@@ -66,7 +66,7 @@ func Open(id int) (*Segment, error) {
 // Creates a shared memory segment of a given size, and also allows for the specification of
 // creation flags supported by the shmget() call, as well as specifying permissions.
 //
-func OpenSegment(size uint64, flags SharedMemoryFlags, perms os.FileMode) (*Segment, error) {
+func OpenSegment(size uint32, flags SharedMemoryFlags, perms os.FileMode) (*Segment, error) {
 	if shmid, err := C.sysv_shm_open(C.ulong(size), C.int(flags), C.int(perms)); err == nil {
 		if actual_size, err := C.sysv_shm_get_size(shmid); err != nil {
 			return nil, fmt.Errorf("Failed to retrieve SHM size: %v", err)
