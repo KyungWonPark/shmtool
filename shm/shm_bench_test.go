@@ -10,7 +10,7 @@ import (
 var segmentId int
 var data []byte
 
-func benchmarkAllocateAndDestroy(size int, b *testing.B) {
+func benchmarkAllocateAndDestroy(size uint64, b *testing.B) {
 	for n := 0; n < b.N; n++ {
 		segment, _ := Create(size)
 		segmentId = segment.Id
@@ -29,7 +29,7 @@ func BenchmarkAllocate_100MB(b *testing.B)    { benchmarkAllocateAndDestroy(1048
 func BenchmarkAllocate_1GB(b *testing.B)      { benchmarkAllocateAndDestroy(1073741824, b) }
 
 // Full Read: ioutil
-func benchmarkReadFullAuto(size int, b *testing.B) {
+func benchmarkReadFullAuto(size uint64, b *testing.B) {
 	segment, _ := Create(size)
 	segmentId = segment.Id
 
@@ -52,7 +52,7 @@ func BenchmarkReadFullAuto_100MB(b *testing.B)    { benchmarkReadFullAuto(104857
 func BenchmarkReadFullAuto_1GB(b *testing.B)      { benchmarkReadFullAuto(1073741824, b) }
 
 // Full Read: Preallocated Slice
-func benchmarkReadFullPreallocate(size int, b *testing.B) {
+func benchmarkReadFullPreallocate(size uint64, b *testing.B) {
 	segment, _ := Create(size)
 	segmentId = segment.Id
 	data = make([]byte, size)
@@ -77,7 +77,7 @@ func BenchmarkReadFullPreallocate_100MB(b *testing.B)    { benchmarkReadFullPrea
 func BenchmarkReadFullPreallocate_1GB(b *testing.B)      { benchmarkReadFullPreallocate(1073741824, b) }
 
 // Full Read: Preallocated Slice
-func benchmarkReadChunkFull(size int, b *testing.B) {
+func benchmarkReadChunkFull(size uint64, b *testing.B) {
 	segment, _ := Create(size)
 	segmentId = segment.Id
 	var data []byte
@@ -87,7 +87,7 @@ func benchmarkReadChunkFull(size int, b *testing.B) {
 		data = d
 	}
 
-	if len(data) < size {
+	if uint64(len(data)) < size {
 		b.Errorf("Expected %d, got: %d", size, len(data))
 	}
 
